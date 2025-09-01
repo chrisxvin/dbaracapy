@@ -1,0 +1,28 @@
+{
+    "svelteIndentScriptAndStyle": false,
+    "svelteBracketNewLine": false,
+    "arrowParens": "avoid",
+    "endOfLine": "lf",
+    "jsxBracketSameLine": true,
+    "semi": true,
+    "useTabs": false,
+    "tabWidth": 4,
+    "singleQuote": false,
+    "singleAttributePerLine": false,
+    "trailingComma": "all",
+    "printWidth": 250,
+    "plugins": [
+        "prettier-plugin-svelte",
+        "prettier-plugin-multiline-arrays",
+        "prettier-plugin-tailwindcss"
+    ],
+    "overrides": [
+        {
+            "files": "*.svelte",
+            "options": {
+                "parser": "svelte"
+            }
+        }
+    ],
+    "tailwindStylesheet": "./src/app.css"
+}
