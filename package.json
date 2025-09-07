@@ -1,0 +1,27 @@
+{
+    "name": "dbaracapy",
+    "private": true,
+    "version": "0.0.1",
+    "type": "module",
+    "scripts": {
+        "dev": "vite dev",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "@eslint/compat": "catalog:",
+        "@eslint/js": "catalog:",
+        "@types/node": "catalog:",
+        "eslint": "catalog:",
+        "eslint-config-prettier": "catalog:",
+        "globals": "catalog:",
+        "prettier": "catalog:",
+        "prettier-plugin-multiline-arrays": "catalog:",
+        "prettier-plugin-svelte": "catalog:",
+        "prettier-plugin-tailwindcss": "catalog:",
+        "typescript": "catalog:",
+        "typescript-eslint": "catalog:",
+        "unplugin-auto-import": "catalog:"
+    },
+    "packageManager": "pnpm@10.15.1"
+}

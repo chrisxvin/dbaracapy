@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "lib": [
+            "esnext",
+        ],
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "allowJs": true,
+        "checkJs": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "./typings",
+        ],
+    },
+    "include": [
+        "./client/**/*.ts",
+
+        "./server/**/*.js",
+        "./server/**/*.ts",
+
+        "./typings/*.d.ts",
+    ],
+    "exclude": [
+        "node_modules",
+        "bin",
+        "**/bin",
+    ],
+}
