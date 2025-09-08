@@ -43,6 +43,7 @@ server.register(fastifyFormbody);
 // 注册 autoload 插件，dir 指定 routes 目录
 await server.register(fastifyAutoload, {
     dir: path.join(__dirname, "routes"), // 自动加载 routes 目录下的所有路由
+    routeParams: true,
     // options: Object.assign({ prefix: "/" }, process.env), // 可选：添加前缀或环境变量
 });
 

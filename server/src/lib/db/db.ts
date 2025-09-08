@@ -1,22 +1,18 @@
 import type { IExecuteResult, IQueryResult } from "@server/db";
-import type { Knex } from "knex";
 
-import knex from "knex";
-import { getProfile, getProfiles } from "../../common";
-import { createAdapter } from "./adapters";
 import { getConnection } from "./connection";
 
 
-async function dispatch(profileId: string, database: string, sql: string, bindings: any[], normalizeCallback: (adapter: IDatabaseAdatpter) => ((result: any) => any)): Promise<any> {
-    // get connection by profileId and database
-    const conn = getConnection(profileId, database);
+async function dispatch(connectionId: string, sql: string, bindings: any[], normalizeCallback: (adapter: IDatabaseAdatpter) => ((result: any) => any)): Promise<any> {
+    // get connection
+    const conn = getConnection(connectionId);
 
     // run sql with adapter
     const result = await conn.connection.raw(sql, bindings);
     return normalizeCallback(conn.adapter)(result);
 }
 
-export async function execute(profileId: string, database: string, sql: string, bindings: any[] = []): Promise<IExecuteResult> {
+export async function execute(connectionId: string, sql: string, bindings: any[] = []): Promise<IExecuteResult> {
     /*
     // get connection by profileId and database
     const conn = getConnection(profileId, database);
@@ -28,10 +24,10 @@ export async function execute(profileId: string, database: string, sql: string, 
     // return result
     return resolvedResult;
     */
-    return dispatch(profileId, database, sql, bindings, (adapter) => adapter.normalizeExecute);
+    return dispatch(connectionId, sql, bindings, (adapter) => adapter.normalizeExecute);
 }
 
-export async function query<T = any>(profileId: string, database: string, sql: string, bindings: any[] = []): Promise<IQueryResult<T>> {
+export async function query<T = any>(connectionId: string, sql: string, bindings: any[] = []): Promise<IQueryResult<T>> {
     /*
     // get connection by profileId and database
     const conn = getConnection(profileId, database);
@@ -43,7 +39,7 @@ export async function query<T = any>(profileId: string, database: string, sql: s
     // return result
     return resolvedResult;
     */
-    return dispatch(profileId, database, sql, bindings, (adapter) => adapter.normalizeQuery);
+    return dispatch(connectionId, sql, bindings, (adapter) => adapter.normalizeQuery);
 }
 
 

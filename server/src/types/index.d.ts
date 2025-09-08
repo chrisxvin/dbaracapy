@@ -3,7 +3,7 @@ import type { Knex } from "knex";
 declare global {
 
     declare interface IConnection {
-        // id: string;
+        id: string;
         profileId: string;
         database: string;
         // todo: change to pool
