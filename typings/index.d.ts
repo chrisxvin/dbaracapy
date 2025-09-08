@@ -9,6 +9,7 @@ declare global {
         trace: LogFunction;
     }
 
+    var log: LogFunction & ILogger;
 }
 
 export { };

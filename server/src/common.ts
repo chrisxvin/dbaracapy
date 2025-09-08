@@ -4,7 +4,6 @@ import { fileURLToPath } from "node:url";
 
 // 动态加载配置文件
 import configDist from "./config.dist";
-import { log } from "node:console";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

@@ -1,5 +1,5 @@
 import type { ISqlResult } from "@server/db";
-import { log } from "console";
+
 
 export class MysqlAdapter implements IDatabaseAdatpter {
     public normalize<T = any>(input: any): ISqlResult<T> {

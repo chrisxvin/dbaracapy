@@ -15,3 +15,4 @@ _log.debug = debug;
 _log.trace = trace;
 
 export const log: LogFunction & ILogger = _log;
+globalThis.log = log;
