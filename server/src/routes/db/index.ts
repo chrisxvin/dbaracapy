@@ -4,7 +4,7 @@ import type { SqlRequestBody, QueryResponseBody, ExecuteResponseBody } from "./t
 
 import { SqlRequestBodySchema, QueryResponseBodySchema, ExecuteResponseBodySchema } from "./types";
 import { ErrorResponseBodySchema } from "../../types";
-import * as db from "../../db";
+import * as db from "$lib/db";
 
 function addRouteQuery(fastify: FastifyInstance) {
     fastify.post<{
