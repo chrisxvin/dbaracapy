@@ -1,28 +1,46 @@
-import type { HTTPMethods, FastifyInstance } from "fastify";
-import type { IConfig } from "./types";
-
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "node:url";
 
 // 动态加载配置文件
 import configDist from "./config.dist";
+import { log } from "node:console";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 let config: IConfig = configDist as IConfig;
 
-export async function loadConfig() {
+export function loadConfig() {
     // 加载配置
-    const configPath = path.join(__dirname, "config.js");
+    const configPath = path.join(__dirname, "config.json");
     if (fs.existsSync(configPath)) {
-        config = (await import(configPath)).default;
+        // config = (await import(configPath)).default;
+        config = JSON.parse(fs.readFileSync(configPath, "utf8"));
     }
 }
 
 export function getConfig(): IConfig {
     return config;
+}
+
+let profiles: IServerProfile[] = [];
+
+export function loadProfiles() {
+    const configPath = path.join(__dirname, "profiles.json");
+    if (fs.existsSync(configPath)) {
+        // config = (await import(configPath)).default;
+        profiles = JSON.parse(fs.readFileSync(configPath, "utf8"));
+        log("Profiles:", profiles);
+    }
+}
+
+export function getProfiles(): IServerProfile[] {
+    return profiles;
+}
+
+export function getProfile(id: string): IServerProfile | undefined {
+    return profiles.find(p => p.guid === id);
 }
 
 /*

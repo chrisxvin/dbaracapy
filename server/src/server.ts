@@ -13,8 +13,6 @@ import fastifyFormbody from "@fastify/formbody";
 import fastifyStatic from "@fastify/static";
 import fastifyAutoload from "@fastify/autoload";
 
-import { runSQL } from "./db";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -89,6 +87,6 @@ export const start = async () => {
             console.error(err);
             process.exit(1);
         }
-        console.log(`Server listening at ${address}`);
+        // console.log(`Server listening at ${address}`);
     });
 };

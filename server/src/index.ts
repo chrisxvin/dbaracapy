@@ -1,13 +1,12 @@
-import fs from "fs";
-import path from "path";
-
+import "./utils/logger";
 import "./common";
 
-import { loadConfig } from "./common";
+import { loadConfig, loadProfiles } from "./common";
 import { start } from "./server";
 
-async function main() {
-    await loadConfig();
+function main() {
+    loadConfig();
+    loadProfiles();
     start();
 }
 

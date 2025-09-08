@@ -1,23 +1,26 @@
 import type { Static } from "@sinclair/typebox";
 import { Type } from "@sinclair/typebox";
 
+// 请求Body结构
 // 使用 TypeBox 定义 Schema
 export const QueryRequestBodySchema = Type.Object({
+    // 要使用的数据库连接
+    profileId: Type.String(),
+    // 在哪个数据库上执行
+    database: Type.String(),
     // 要执行的 sql
     sql: Type.String(),
-    // sql 中的参数，key-value 形式
+    // sql 中的参数，value数组
     bindings: Type.Optional(Type.Array(Type.Any())),
 });
 
 // 从 Schema 提取出 TypeScript 类型
 export type QueryRequestBody = Static<typeof QueryRequestBodySchema>;
 
+// 响应Body结构
 export const QueryResponseBodySchema = Type.Object({
-    // todo: 当发生错误时，body直接返回错误信息。
-    // errorCode: Type.Integer(),
-    // errorMsg: Type.String(),
+    rows: Type.Array(Type.Record(Type.String(), Type.Unknown())),
     affectedRows: Type.Integer(),
-    data: Type.Array(Type.Record(Type.String(), Type.Unknown())),
 });
 
 export type QueryResponseBody = Static<typeof QueryResponseBodySchema>;

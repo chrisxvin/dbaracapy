@@ -1,17 +1,25 @@
 import type { FastifyInstance } from "fastify";
+import type { ErrorResponseBody } from "../../types";
+import type { QueryRequestBody, QueryResponseBody } from "./types";
 
-import { runSQL } from "../../db";
-import { QueryRequestBodySchema, QueryResponseBodySchema, type QueryRequestBody } from "./types";
+import { runSQL } from "../../db/db";
+import { QueryRequestBodySchema, QueryResponseBodySchema } from "./types";
+import { ErrorResponseBodySchema } from "../../types";
+import { execSQL } from "../../db";
 
 
-export async function routes(server: FastifyInstance) {
-    server.post<{ Body: QueryRequestBody }>(
+export async function routes(fastify: FastifyInstance) {
+    fastify.post<{
+        Body: QueryRequestBody;
+        Reply: QueryResponseBody | ErrorResponseBody;
+    }>(
         "/exec",
         {
             schema: {
                 body: QueryRequestBodySchema,
                 response: {
                     200: QueryResponseBodySchema,
+                    400: ErrorResponseBodySchema,
                 },
             },
         },
@@ -22,18 +30,15 @@ export async function routes(server: FastifyInstance) {
                 return reply.code(400).send({ error: "DB-GUID header required" });
             }
             */
-            const { sql, bindings = [] } = request.body;
+            const { profileId, database, sql, bindings = [] } = request.body;
             try {
+
                 // const pool = getPool(dbGuid);
                 // const result = await pool.query(sql, values);
-                const result = await runSQL(sql, bindings);
-                console.log("runSQL", result);
-                reply.send({
-                    data: result.rows,
-                    affectedRows: -1,
-                });
+                const result = await execSQL(profileId, database, sql, bindings);
+                reply.code(200).send(result);
             } catch (err) {
-                reply.code(500).send({ error: err });
+                reply.code(400).send(String(err));
             }
         },
     );
