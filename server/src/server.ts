@@ -47,26 +47,6 @@ await server.register(fastifyAutoload, {
 });
 
 /*
-// API 路由：CRUD 操作（示例：SELECT）
-server.get("/crud/:table", async (request, reply) => {
-const dbGuid = request.headers["db-guid"];
-if (!dbGuid) {
-    return reply.code(400).send({ error: "DB-GUID header required" });
-}
-const { table } = request.params;
-const { where } = request.query;
-try {
-    const pool = getPool(dbGuid);
-    const sql = `SELECT * FROM ${table} ${where ? `WHERE ${where}` : ""}`;
-    const result = await pool.query(sql);
-    reply.send(result.rows);
-} catch (err) {
-    reply.code(500).send({ error: err.message });
-}
-});
-*/
-
-/*
 // API 路由：添加数据库配置
 server.post("/config", async (request, reply) => {
   const { guid, host, port, database, user, password } = request.body;

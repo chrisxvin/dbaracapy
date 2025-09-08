@@ -14,17 +14,6 @@ interface IConnection {
     adapter: IDatabaseAdatpter;
 }
 
-const db = knex({
-    client: "mysql",
-    connection: {
-        host: "192.168.1.231",
-        port: 3306,
-        user: "trinity",
-        password: "trinity",
-        database: "auth3",
-    },
-});
-
 const connections = new Map<string, IConnection>();
 
 export function getConnection(profileId: string, database: string): IConnection {
@@ -73,6 +62,7 @@ function getPool(dbGuid: string) {
 }
 
 export async function runSQL<T = any>(sql: string, bindings: any[] = []): Promise<ISqlResult<T>> {
+    const db: any = null;
     const result = await db.raw(sql, bindings);
     console.log("runSQL", sql, bindings);
     console.log("runSQL result", result);

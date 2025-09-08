@@ -1,4 +1,4 @@
-import type { ISqlResult } from "@server/db";
+import type { IExecuteResult, IQueryResult } from "@server/db";
 
 declare global {
     //#region Common
@@ -27,7 +27,8 @@ declare global {
     declare type DatabaseType = "mysql" | "mariadb" | "mssql" | "postgres";
 
     declare interface IDatabaseAdatpter {
-        normalize<T = any>(input: any): ISqlResult<T>;
+        normalizeExecute(input: any): IExecuteResult;
+        normalizeQuery<T = any>(input: any): IQueryResult<T>;
     }
 }
 

@@ -1,9 +1,10 @@
 import type { Static } from "@sinclair/typebox";
+
 import { Type } from "@sinclair/typebox";
 
 // 请求Body结构
 // 使用 TypeBox 定义 Schema
-export const QueryRequestBodySchema = Type.Object({
+export const SqlRequestBodySchema = Type.Object({
     // 要使用的数据库连接
     profileId: Type.String(),
     // 在哪个数据库上执行
@@ -15,12 +16,18 @@ export const QueryRequestBodySchema = Type.Object({
 });
 
 // 从 Schema 提取出 TypeScript 类型
-export type QueryRequestBody = Static<typeof QueryRequestBodySchema>;
+export type SqlRequestBody = Static<typeof SqlRequestBodySchema>;
 
-// 响应Body结构
+// 查询响应Body结构
 export const QueryResponseBodySchema = Type.Object({
     rows: Type.Array(Type.Record(Type.String(), Type.Unknown())),
-    affectedRows: Type.Integer(),
 });
 
 export type QueryResponseBody = Static<typeof QueryResponseBodySchema>;
+
+// 执行响应Body结构
+export const ExecuteResponseBodySchema = Type.Object({
+    affectedRows: Type.Integer(),
+});
+
+export type ExecuteResponseBody = Static<typeof ExecuteResponseBodySchema>;

@@ -1,6 +1,9 @@
 declare module "@server/db" {
-    interface ISqlResult<T = any> {
-        rows: T[];
+    interface IExecuteResult {
         affectedRows: number;
+    }
+
+    interface IQueryResult<T = any> {
+        rows: T[];
     }
 }
