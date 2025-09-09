@@ -31,7 +31,7 @@ function _createConnection(profileId: string, database: string): IConnection {
         },
     });
 
-    const id = uuidv4();
+    const id = uuidv4().toUpperCase();
     const conn = {
         id,
         profileId,
