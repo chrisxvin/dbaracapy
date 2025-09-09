@@ -4,8 +4,8 @@
     "version": "0.0.1",
     "type": "module",
     "scripts": {
-        "dev": "cd src && tsx watch index.ts",
-        "start": "cd src && tsx index.ts",
+        "dev": "tsx watch src/index.ts",
+        "start": "tsx src/index.ts",
         "build": "tsup",
         "watch": "tsup --watch"
     },

@@ -1,10 +1,10 @@
 import type { Static } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
-import type { ErrorResponseBody } from "$/types";
+import type { ErrorResponse } from "$/types";
 import type { RouteParams } from "./types";
 
 import { Type } from "@sinclair/typebox";
-import { ErrorResponseBodySchema } from "$/types";
+import { ErrorResponseSchema } from "$/types";
 import * as db from "$lib/db";
 
 const ConnectionResponseSchema = Type.String();
@@ -12,8 +12,7 @@ const ConnectionResponseSchema = Type.String();
 type ConnectionResponse = Static<typeof ConnectionResponseSchema>;
 
 
-
-function GetConnect(fastify: FastifyInstance) {
+function GET(fastify: FastifyInstance) {
     fastify.get<{
         Reply: ConnectionResponse;
         Params: RouteParams;
@@ -22,7 +21,7 @@ function GetConnect(fastify: FastifyInstance) {
             schema: {
                 response: {
                     200: ConnectionResponseSchema,
-                    400: ErrorResponseBodySchema,
+                    400: ErrorResponseSchema,
                 },
             },
         },
@@ -39,5 +38,5 @@ function GetConnect(fastify: FastifyInstance) {
 }
 
 export default function routes(fastify: FastifyInstance) {
-    GetConnect(fastify);
+    GET(fastify);
 }
