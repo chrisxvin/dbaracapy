@@ -10,25 +10,25 @@ import { SqlRequestSchema } from "../types";
 
 //#region Types
 
-// 查询响应Body结构
-const QueryResponseSchema = Type.Object({
-    rows: Type.Array(Type.Record(Type.String(), Type.Unknown())),
+// 执行响应Body结构
+const ExecuteResponseSchema = Type.Object({
+    affectedRows: Type.Integer(),
 });
 
-type QueryResponse = Static<typeof QueryResponseSchema>;
+type ExecuteResponse = Static<typeof ExecuteResponseSchema>;
 
 //#endregion
 
 function POST(fastify: FastifyInstance) {
     fastify.post<{
         Body: SqlRequest;
-        Reply: QueryResponse | ErrorResponse;
+        Reply: ExecuteResponse | ErrorResponse;
     }>("/",
         {
             schema: {
                 body: SqlRequestSchema,
                 response: {
-                    200: QueryResponseSchema,
+                    200: ExecuteResponseSchema,
                     400: ErrorResponseSchema,
                 },
             },
@@ -36,7 +36,7 @@ function POST(fastify: FastifyInstance) {
         async (request, reply) => {
             const { connectionId, sql, bindings = [] } = request.body;
             try {
-                const result = await db.query(connectionId, sql, bindings);
+                const result = await db.execute(connectionId, sql, bindings);
                 reply.code(200).send(result);
             } catch (err) {
                 reply.code(400).send(String(err));
@@ -45,8 +45,6 @@ function POST(fastify: FastifyInstance) {
     );
 }
 
-export async function routes(fastify: FastifyInstance) {
+export default async function(fastify: FastifyInstance) {
     POST(fastify);
 }
-
-export default routes;
