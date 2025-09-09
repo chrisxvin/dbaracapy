@@ -1,9 +1,7 @@
-import type { Static } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
-import type { ErrorResponse } from "$/types";
-import type { SqlRequest } from "../types";
+import type { FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
 
-import { Type } from "@sinclair/typebox";
+import { Type } from "@fastify/type-provider-typebox";
 import * as db from "$lib/db";
 import { ErrorResponseSchema } from "$/types";
 import { SqlRequestSchema } from "../types";
@@ -15,15 +13,10 @@ const ExecuteResponseSchema = Type.Object({
     affectedRows: Type.Integer(),
 });
 
-type ExecuteResponse = Static<typeof ExecuteResponseSchema>;
-
 //#endregion
 
-function POST(fastify: FastifyInstance) {
-    fastify.post<{
-        Body: SqlRequest;
-        Reply: ExecuteResponse | ErrorResponse;
-    }>("/",
+const POST: FastifyPluginAsyncTypebox = async (fastify, opts) => {
+    fastify.post("/",
         {
             schema: {
                 body: SqlRequestSchema,
@@ -45,6 +38,6 @@ function POST(fastify: FastifyInstance) {
     );
 }
 
-export default async function(fastify: FastifyInstance) {
-    POST(fastify);
+export default async function (fastify: FastifyInstance, opts: Record<never, never>) {
+    POST(fastify, opts);
 }

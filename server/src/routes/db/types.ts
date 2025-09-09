@@ -1,5 +1,3 @@
-import type { Static } from "@sinclair/typebox";
-
 import { Type } from "@sinclair/typebox";
 
 // 请求Body结构
@@ -12,6 +10,3 @@ export const SqlRequestSchema = Type.Object({
     // sql 中的参数，value数组
     bindings: Type.Optional(Type.Array(Type.Any())),
 });
-
-// 从 Schema 提取出 TypeScript 类型
-export type SqlRequest = Static<typeof SqlRequestSchema>;

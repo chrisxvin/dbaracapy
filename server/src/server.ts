@@ -1,4 +1,5 @@
 import type { FastifyInstance, FastifyRequest, FastifyReply, FastifyListenOptions } from "fastify";
+import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 
 import Fastify from "fastify";
 import fs from "node:fs";
@@ -23,7 +24,7 @@ const serverOptions = {
     //     cert: readFileSync(join(__dirname, "../server.crt")),
     // },
 };
-export const server: FastifyInstance = Fastify(serverOptions);
+export const server = Fastify(serverOptions).withTypeProvider<TypeBoxTypeProvider>();
 server.register(fastifyCookie);
 server.register(fastifyCors, {
     origin: ["http://localhost", "http://localhost:8080", "https://localhost", "https://localhost:8080"],

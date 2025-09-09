@@ -1,26 +1,28 @@
-import type { Static } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
-import type { ErrorResponse } from "$/types";
+import type { FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
 
-import { Type } from "@sinclair/typebox";
-import { ErrorResponseSchema } from "$/types";
+import { Type } from "@fastify/type-provider-typebox";
 import { getProfiles } from "$/common";
 
 //#region Types
 
 //#endregion
 
-function GET(fastify: FastifyInstance) {
-    fastify.get(
-        "/",
-        {},
+const GET: FastifyPluginAsyncTypebox = async (fastify, opts) => {
+    fastify.get("/",
+        {
+            schema: {
+                response: {
+                    200: Type.Array(Type.Any()),
+                }
+            }
+        },
         (request, reply) => {
             reply.code(200).send(getProfiles());
         },
     );
-}
+};
 
-
-export default async function(fastify: FastifyInstance) {
-    GET(fastify);
+export default async function (fastify: FastifyInstance, opts: Record<never, never>) {
+    GET(fastify, opts);
 }

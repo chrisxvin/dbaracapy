@@ -1,24 +1,25 @@
-import type { Static } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
-import type { ErrorResponse } from "$/types";
+import type { FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
 import type { RouteParams } from "./types";
 
-import { Type } from "@sinclair/typebox";
-import { ErrorResponseSchema } from "$/types";
 import * as db from "$lib/db";
+import { Type } from "@fastify/type-provider-typebox";
+import { ErrorResponseSchema } from "$/types";
+
+//#region Types
 
 const ConnectionResponseSchema = Type.String();
 
-type ConnectionResponse = Static<typeof ConnectionResponseSchema>;
+//#endregion
 
-
-function GET(fastify: FastifyInstance) {
-    fastify.get<{
-        Reply: ConnectionResponse;
-        Params: RouteParams;
-    }>("/",
+const GET: FastifyPluginAsyncTypebox = async (fastify, opts) => {
+    fastify.get("/",
         {
             schema: {
+                params: Type.Object({
+                    profileId: Type.String(),
+                    database: Type.String(),
+                }),
                 response: {
                     200: ConnectionResponseSchema,
                     400: ErrorResponseSchema,
@@ -37,6 +38,6 @@ function GET(fastify: FastifyInstance) {
     );
 }
 
-export default function routes(fastify: FastifyInstance) {
-    GET(fastify);
+export default async function (fastify: FastifyInstance, opts: Record<never, never>) {
+    GET(fastify, opts);
 }

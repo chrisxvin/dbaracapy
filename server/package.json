@@ -24,6 +24,7 @@
         "uuid": "catalog:"
     },
     "devDependencies": {
+        "@fastify/type-provider-typebox": "^5.2.0",
         "@types/mysql": "^2.15.27",
         "tsup": "catalog:",
         "tsx": "catalog:"
